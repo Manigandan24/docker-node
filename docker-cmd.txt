@@ -1,0 +1,143 @@
+Install Docker Tool box for windows
+------------------------------------
+Start docker with quick start terminal
+
+docker-machine restart 
+
+1) docker run hello-world
+
+docker override command
+	these are part of busybox commands
+
+2) docker run busybox echo hi there
+
+3)docker run busybox ls
+
+list of running containers
+--------------------------
+
+1) docker ps
+
+2) docker ps --all -> to list all containers created from docker start up
+
+list of docker images
+----------------------
+docker image ls
+
+
+docker life cycle
+------------------
+docker run image= docker create image + docker start -a container id
+
+example : docker create busybox echo hello-world
+			docker start -a container id from previous step
+
+Removing stopped Containers
+----------------------------
+docker system prune ---delete all containers from system
+
+Docker Logs for a Containers
+-------------------------------
+docker logs container id
+
+Stopping Containers
+---------------------
+docker ps
+
+docker stop container-id ----graceful stop
+
+docker kill container-id ----instant stop
+
+Executing Commands in Running container:
+------------------------------------------
+step 1) docker exec -it container id sh (command prompt for unix) or
+		docker run -it image-name sh
+
+step 2) Run commands in the container
+
+Build Image:
+-------------
+1) create Dockerfile
+
+Instruction argument
+----------  --------
+FROM 		base image
+
+WORKDIR     arg
+
+COPY 		arg
+
+RUN 		arg
+
+CMD 		[arg]
+
+Step 2: docker build .
+
+build and tagging an image
+----------------
+docker build -f Dockerfile.dev .   - (specify file name)
+
+docker build -t doockerid/projectname:version . (.=> current directory which has Dockerfile)
+
+docker build -t kandan/redis:latest .
+
+docker run kandan/redis:latest
+
+port mapping:
+---------------
+docker run -p machine port(localhost port number):container port(port from image created)  kandan/redis:latest
+
+docker run -p 8080:8080 kandan/redis:latest
+
+URL : http://192.168.99.100:8080/
+
+stopping container:
+-------------------
+docker stop bcbf97194a1c
+
+detached mode:
+---------------
+docker run -d -p 8080:8080 kandan/redis:latest
+
+creating and running multiple docker container:
+------------------------------------------------
+
+use docker compose yml
+
+docker-compose up --build
+
+docker-compose down
+
+restart:'on-failure or always or no' - restart policy to restart on any abnormal exits of container
+
+docker-compose ps - to check status of containers inside compose file
+
+docker login from command:
+---------------------------
+
+docker login --username=skmani2
+
+docker tag 88f4ef264d1e kandan/nodeweb:latest 
+
+docker push kandan/nodeweb
+
+
+Kubernetes:
+-----------
+kubectl---> cli to interact with kubernetes cluster
+minikube ---> one node cluster for development purpose in localhost
+
+Install kubectl using chocolatey
+Install virtual box from virtualbox.org if docker desktop is not installed
+Install Minikube using chocolatey
+
+1)Download Kubectl & minikube exe files
+2) Set env path for Kubectl and minikube
+
+3) kubectl version --client
+4) minikube version
+5)minikube start
+6)minikube status
+
+
+
