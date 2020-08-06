@@ -1,0 +1,27 @@
+Intial local folder upload to git repo
+-----------------------------------------
+
+git init
+
+git add .
+
+git commit -m "message"
+
+git remote add origin https://github.com/ManiSoftSolutions/docker-node.git
+
+git remote -v
+
+git pull origin master --allow-unrelated-histories
+
+git pull origin master
+
+git push origin master
+
+Check in changes:
+-------------------
+
+git pull origin master
+
+git add .
+
+git commit -m "message"
