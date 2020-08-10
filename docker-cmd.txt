@@ -1,13 +1,33 @@
 Install Docker Tool box for windows
 ------------------------------------
-Start docker with quick start terminal
+Start docker with quick start terminal to start default VM
 
-docker-machine restart 
+Optional : create VM and use below commands to override default configs
+-----------------------------------------------------------------------
+docker-machine create -d virtualbox --virtualbox-memory=2048 --virtualbox-cpu-count=2 --virtualbox-disk-size=40960  --virtualbox-no-vtx-check test
 
+docker-machine start test
+
+docker-machine regenerate-certs test
+
+docker-machine.exe env --shell cmd test
+
+docker-machine.exe ssh test
+
+docker-machine restart test
+
+Replace path for DOCKER_ from env variables to new machine
+
+List docker-machine:
+---------------------
+docker-machine ls -t 20
+
+Verify docker installation:
+---------------------------
 1) docker run hello-world
 
-docker override command
-	these are part of busybox commands
+docker override command - these are part of busybox commands
+-------------------------------------------------------------
 
 2) docker run busybox echo hi there
 
@@ -36,6 +56,12 @@ Removing stopped Containers
 ----------------------------
 docker system prune ---delete all containers from system
 
+Removing images:
+-------------------
+docker image rm multi-client:1.0 -f
+
+docker image prune -f
+
 Docker Logs for a Containers
 -------------------------------
 docker logs container id
@@ -46,17 +72,19 @@ docker ps
 
 docker stop container-id ----graceful stop
 
+docker stop bcbf97194a1c(container-id)
+
 docker kill container-id ----instant stop
 
-Executing Commands in Running container:
+Executing shell/bash Commands in Running container:
 ------------------------------------------
 step 1) docker exec -it container id sh (command prompt for unix) or
 		docker run -it image-name sh
 
-step 2) Run commands in the container
+step 2) Run shell commands in the container
 
-Build Image:
--------------
+Build docker Image for Application:
+-----------------------------------
 1) create Dockerfile
 
 Instruction argument
@@ -74,7 +102,7 @@ CMD 		[arg]
 Step 2: docker build .
 
 build and tagging an image
-----------------
+-------------------------------
 docker build -f Dockerfile.dev .   - (specify file name)
 
 docker build -t doockerid/projectname:version . (.=> current directory which has Dockerfile)
@@ -91,10 +119,6 @@ docker run -p 8080:8080 kandan/redis:latest
 
 URL : http://192.168.99.100:8080/
 
-stopping container:
--------------------
-docker stop bcbf97194a1c
-
 detached mode:
 ---------------
 docker run -d -p 8080:8080 kandan/redis:latest
@@ -102,7 +126,7 @@ docker run -d -p 8080:8080 kandan/redis:latest
 creating and running multiple docker container:
 ------------------------------------------------
 
-use docker compose yml
+use docker compose yml for multiple containers
 
 docker-compose up --build
 
@@ -121,9 +145,14 @@ docker tag 88f4ef264d1e kandan/nodeweb:latest
 
 docker push kandan/nodeweb
 
+------------------------------------------------
+Kubernetes:System to deploy containerized apps |
+------------------------------------------------
+Node --> Virtual /physical machine
+Pod --> Running one or more Container
+Service --> Networking config for the container in kubernetes cluster
 
-Kubernetes:
------------
+
 kubectl---> cli to interact with kubernetes cluster
 minikube ---> one node cluster for development purpose in localhost
 
@@ -138,6 +167,35 @@ Install Minikube using chocolatey
 4) minikube version
 5)minikube start
 6)minikube status
+7)minikube ip
+
+Incase issue with start minikube cluster:
+-----------------------------------------
+    $ minikube stop
+    $ minikube delete  
+    $ minikube start
+
+URL : http://192.168.99.100:30001/
+
+useful commands
+----------------
+kubectl get nodes
+
+kubectl get pods
+
+kubectl get services
+
+kubectl describe pods nodeweb-pod
+
+Pod:
+----
+kubectl apply -f pod.yaml
+
+
+Service:
+-----------
+kubectl apply -f servic.yaml
+
 
 
 

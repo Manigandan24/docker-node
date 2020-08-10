@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+    name: nodeweb-pod
+    labels:
+        component: nodeweb
+spec:
+    containers:
+        - name: nodejscontainer
+          image: skmani2/nodeweb
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: Always
