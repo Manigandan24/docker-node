@@ -2,12 +2,13 @@ apiVersion: v1
 kind: Pod
 metadata:
     name: nodeweb-pod
+    namespace: test-kube
     labels:
         component: nodeweb
 spec:
     containers:
         - name: nodejscontainer
-          image: skmani2/nodeweb
+          image: skmani2/multi-client:1.0
           ports:
             - containerPort: 8080
           imagePullPolicy: Always

@@ -77,7 +77,7 @@ docker stop bcbf97194a1c(container-id)
 docker kill container-id ----instant stop
 
 Executing shell/bash Commands in Running container:
-------------------------------------------
+---------------------------------------------------
 step 1) docker exec -it container id sh (command prompt for unix) or
 		docker run -it image-name sh
 
@@ -144,58 +144,3 @@ docker login --username=skmani2
 docker tag 88f4ef264d1e kandan/nodeweb:latest 
 
 docker push kandan/nodeweb
-
-------------------------------------------------
-Kubernetes:System to deploy containerized apps |
-------------------------------------------------
-Node --> Virtual /physical machine
-Pod --> Running one or more Container
-Service --> Networking config for the container in kubernetes cluster
-
-
-kubectl---> cli to interact with kubernetes cluster
-minikube ---> one node cluster for development purpose in localhost
-
-Install kubectl using chocolatey
-Install virtual box from virtualbox.org if docker desktop is not installed
-Install Minikube using chocolatey
-
-1)Download Kubectl & minikube exe files
-2) Set env path for Kubectl and minikube
-
-3) kubectl version --client
-4) minikube version
-5)minikube start
-6)minikube status
-7)minikube ip
-
-Incase issue with start minikube cluster:
------------------------------------------
-    $ minikube stop
-    $ minikube delete  
-    $ minikube start
-
-URL : http://192.168.99.100:30001/
-
-useful commands
-----------------
-kubectl get nodes
-
-kubectl get pods
-
-kubectl get services
-
-kubectl describe pods nodeweb-pod
-
-Pod:
-----
-kubectl apply -f pod.yaml
-
-
-Service:
------------
-kubectl apply -f servic.yaml
-
-
-
-

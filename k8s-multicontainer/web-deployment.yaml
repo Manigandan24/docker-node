@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: multi-client-deployment
+    namespace: test-kube
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            component: multi-client
+    template:
+        metadata:
+            name: multi-client-pod
+            namespace: test-kube
+            labels:
+                component: multi-client
+        spec:
+            containers:
+                - name: nodejscontainer
+                  image: skmani2/multi-client:1.0
+                  ports:
+                    - containerPort: 8080
+                  imagePullPolicy: Always
+                  env:
+                    - name: REDIS_HOST
+                      value: redis-srvc
+                    - name: REDIS_PORT
+                      value: '6379'
+                  

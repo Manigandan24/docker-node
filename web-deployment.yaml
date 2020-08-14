@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: nodeweb-deployment
+    namespace: test-kube
+spec:
+    replicas: 4
+    selector:
+        matchLabels:
+            component: nodeweb
+    template:
+        metadata:
+            name: nodeweb-pod
+            namespace: test-kube
+            labels:
+                component: nodeweb
+        spec:
+            containers:
+                - name: nodejscontainer
+                  image: skmani2/nodeweb:1.0
+                  ports:
+                    - containerPort: 8080
+                  imagePullPolicy: Always

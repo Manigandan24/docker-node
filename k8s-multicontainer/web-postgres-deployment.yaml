@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: postgres-deployment
+    namespace: test-kube
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            component: postgres # container name
+    template:
+        metadata:
+            namespace: test-kube
+            labels:
+                component: postgres
+        spec:
+            volumes:
+                - name: postgres-storage
+                  persistentVolumeClaim: 
+                    claimName: pvc-claim
+            containers:
+                - name: postgres
+                  image: postgres
+                  ports:
+                    - containerPort: 5432
+                  imagePullPolicy: Always
+                  envFrom:
+                    - configMapRef:
+                        name: postgres-config
+                  #env:
+                  # - name: POSTGRES_PASSWORD # variable name
+                  #    valueFrom:
+                  #      secretKeyRef:
+                  #          name: postgres-secret # secret name
+                  #          key: password # variable value
+                  volumeMounts:
+                    - name: postgres-storage #same as volume name
+                      mountPath: /var/lib/postgresql/data
+                      subPath: postgres # path inside volume folder in hard drive
