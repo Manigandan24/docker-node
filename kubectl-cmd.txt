@@ -6,6 +6,9 @@ Node --> Virtual /physical machine
 Pod --> Running one or more Container
 Service --> Networking config for the container in kubernetes cluster
 
+--------------------------------------------------------------------------------------------------------------------------------------
+Note : do not use minikube from docker desktop use standalone version to use all the functionalities with load balancing / dashboard
+--------------------------------------------------------------------------------------------------------------------------------------
 
 kubectl---> cli to interact with kubernetes cluster
 minikube ---> one node cluster for development purpose in localhost
@@ -50,6 +53,8 @@ kubectl describe pods nodeweb-pod
 kubectl -n test-kube get deployments
 
 kubectl -n test-kube get pv
+
+kubectl -n test-kube get pvc
 
 kubectl -n test-kube get configmaps
 
@@ -106,6 +111,20 @@ echo -n 'YWRtaW4=' | base64 --decode
 
 kubectl create secret generic postgres-secret --from-literal PGPASS=result from step 1
 
+Ingress:Load Balancer ---deployment varies by provider(like GC,AWS, Azure)
+----------------------
+
+https://kubernetes.github.io/ingress-nginx/deploy/#provider-specific-steps
+
+Also refer Ingress Install links for better understanding
+
+minikube addons enable ingress
+
+kubectl apply -f Ingress-service.yaml
+
+
+
+
 
 
 
@@ -114,12 +133,18 @@ Create multiple objects/resources in a single run:
 kubectl apply -f dirname
 
 
-update deployment with image version
+
+
+update deployment thru command with image version
 -------------------------------------------------
 
 kubectl set fieldname objecttype/objectname container-name = update value
 
 kubectl -n test-kube set image deployment/nodeweb-deployment nodejscontainer=skmani2/nodeweb:1.0
+
+
+
+
 
 delete:
 -----------
@@ -181,8 +206,12 @@ Types of Services: Setup networking in a cluster
 				--Exposes a pod to other objects in cluster
 	- NodePort -- development purpose and will be used only in local development env
 				--Exposes a pod to other objects in cluster
-	- LoadBalancer
-	- Ingress
+	- LoadBalancer - Legacy way of getting network traffic into a cluster - Applies for only same type of pods/services
+	- Ingress - Exposes a set of different services to the outside world 
+			Ingress-Nginx - Load balancer
+			Ingress Config - Object that has a set of config rules describing how traffic should be routed
+			Ingress Controller - Watches for changes to the Ingress and updates the thing that handles traffic in the cluster
+				Traffic -> Node Cluster(Ingress controller + thing that routes traffic defined in the Ingress Config ->Routes to appropriate services)
 
 Volumes: data storage
 --------
@@ -196,3 +225,5 @@ ConfigMaps : config file for env variables from deployment.yaml
 
 Secret: securely store a piece of information in cluster in the encoded format. Eg: password/apikeys
 --------
+
+Dashboard: minikube dashboard

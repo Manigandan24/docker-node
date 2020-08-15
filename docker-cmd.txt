@@ -16,6 +16,8 @@ docker-machine.exe ssh test
 
 docker-machine restart test
 
+docker-machine stop test
+
 Replace path for DOCKER_ from env variables to new machine
 
 List docker-machine:

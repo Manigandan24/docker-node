@@ -1,0 +1,23 @@
+Ingress Tutorial : https://www.joyfulbikeshedding.com/blog/2018-03-26-studying-the-kubernetes-ingress-system.html.
+
+To support Ingress Controller
+--------------------------------
+https://minikube.sigs.k8s.io/docs/drivers/docker/#known-issues
+
+Delete your cluster:
+
+minikube delete
+
+Restart with a different driver:
+
+minikube start --driver=hyperv
+
+or
+
+minikube start --driver=virtualbox
+
+installing and enabling ingress-nginx - Commands
+-------------------------------------------------
+https://kubernetes.github.io/ingress-nginx/deploy/#provider-specific-steps
+
+https://github.com/kubernetes/ingress-nginx
