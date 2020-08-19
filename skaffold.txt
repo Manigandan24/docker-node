@@ -1,0 +1,5 @@
+choco install -y skaffold
+
+local changes deploy in minikube automatically using skaffold.yaml config file
+
+start : skaffold dev

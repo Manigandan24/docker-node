@@ -14,7 +14,7 @@ minikube start --driver=hyperv
 
 or
 
-minikube start --driver=virtualbox
+minikube start --driver=virtualbox when hyperv is not installed
 
 installing and enabling ingress-nginx - Commands
 -------------------------------------------------

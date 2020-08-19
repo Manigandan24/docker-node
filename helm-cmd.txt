@@ -1,0 +1,93 @@
+														-----------------------------
+													   | DEPLOYMENT USING HELM CHARTS |
+														-----------------------------
+Reference : https://github.com/helm/helm
+
+https://v2.helm.sh/docs/
+
+https://v2.helm.sh/docs/using_helm/#installing-helm
+
+https://v2.helm.sh/docs/using_helm/#quickstart
+
+Installing Helm: Latest version
+--------------------------------
+choco install kubernetes-helm 
+
+or
+
+choco install kubernetes-helm --version=2.14.0
+
+Setting --history-max on helm init to stop growing history for config map and other objects/resources
+-----------------------------------------------------------------------------------------------
+Try deleting your cluster tiller
+
+kubectl get all --all-namespaces | grep tiller
+kubectl delete deployment tiller-deploy -n kube-system
+kubectl delete service tiller-deploy -n kube-system
+kubectl get all --all-namespaces | grep tiller
+
+Initializing Helm:
+-------------------
+helm init --history-max 200 --service-account tiller --output yaml | sed 's@apiVersion: extensions/v1beta1@apiVersion: apps/v1@' | sed 's@  replicas: 1@  replicas: 1\n  selector: {"matchLabels": {"app": "helm", "name": "tiller"}}@' | kubectl apply -f -
+
+kubectl create serviceaccount --namespace kube-system tiller
+kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+kubectl patch deploy --namespace kube-system tiller-deploy -p "{\"spec\":{\"template\":{\"spec\":{\"serviceAccount\":\"tiller\"}}}}"
+
+kubectl get pods --namespace kube-system
+
+Confirm Helm installation:
+--------------------------
+helm version --display both tiller and client version
+
+
+Configure Helm chart:
+----------------------
+helm create mychart
+
+Update Chart.yaml
+
+update values.yaml
+
+update service.yaml
+
+update deployment.yaml
+
+update ingress.yaml
+
+Validate Helm charts:
+----------------------
+helm lint mychart
+
+Generate Yaml files before installing:
+-----------------------------------------
+helm template mychart
+
+Package Helm chart:
+--------------------
+helm package mychart
+
+Install Helm chart:
+---------------------
+helm install chart
+
+Upgrade/Update Chart:
+---------------------
+helm upgrade relasename mychart
+
+List Helm:
+----------
+helm list
+
+Helm history of release:
+------------------------
+helm history mychart
+
+Helm rollback chart:
+---------------------
+helm rollback mychart 1
+
+
+
+
+

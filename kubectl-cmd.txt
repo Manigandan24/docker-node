@@ -6,9 +6,9 @@ Node --> Virtual /physical machine
 Pod --> Running one or more Container
 Service --> Networking config for the container in kubernetes cluster
 
---------------------------------------------------------------------------------------------------------------------------------------
-Note : do not use minikube from docker desktop use standalone version to use all the functionalities with load balancing / dashboard
---------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Note : do not use minikube created from docker desktop. Use standalone minikube version to create cluster and to use all the functionalities with load balancing / dashboard
+-------------------------------------------------------------------------------------------------------------------------------------------------------
 
 kubectl---> cli to interact with kubernetes cluster
 minikube ---> one node cluster for development purpose in localhost
@@ -30,7 +30,12 @@ Incase issue with start minikube cluster:
 -----------------------------------------
     $ minikube stop
     $ minikube delete  
-    $ minikube start
+    $ minikube start  --Note : if docker ip changes update no_proxy to docker ip in env variables
+	minikube start --driver=virtualbox ---
+
+-------------------------------------------------------------------------------------
+Note: Refer skaffold.txt and skaffold.yml for automatic deployment into minikube
+--------------------------------------------------------------------------------------
 
 useful get commands
 ----------------
@@ -59,6 +64,10 @@ kubectl -n test-kube get pvc
 kubectl -n test-kube get configmaps
 
 kubectl -n test-kube get secrets
+
+kubectl -n test-kube get ingress
+
+kubectl get namespaces
 
 Logs:
 --------
@@ -109,21 +118,17 @@ echo -n 'admin' | base64
 
 echo -n 'YWRtaW4=' | base64 --decode
 
-kubectl create secret generic postgres-secret --from-literal PGPASS=result from step 1
+kubectl create secret generic postgres-secret --from-literal PGPASS=encoded value
 
 Ingress:Load Balancer ---deployment varies by provider(like GC,AWS, Azure)
 ----------------------
-
-https://kubernetes.github.io/ingress-nginx/deploy/#provider-specific-steps
-
-Also refer Ingress Install links for better understanding
-
 minikube addons enable ingress
 
 kubectl apply -f Ingress-service.yaml
 
+https://kubernetes.github.io/ingress-nginx/deploy/#provider-specific-steps
 
-
+Also refer Ingress Install links for better understanding
 
 
 
@@ -138,7 +143,7 @@ kubectl apply -f dirname
 update deployment thru command with image version
 -------------------------------------------------
 
-kubectl set fieldname objecttype/objectname container-name = update value
+kubectl set fieldname objecttype/objectname container-name = tag/version
 
 kubectl -n test-kube set image deployment/nodeweb-deployment nodejscontainer=skmani2/nodeweb:1.0
 
@@ -226,4 +231,4 @@ ConfigMaps : config file for env variables from deployment.yaml
 Secret: securely store a piece of information in cluster in the encoded format. Eg: password/apikeys
 --------
 
-Dashboard: minikube dashboard
+Dashboard: minikube dashboard ----UI for kubernetes resources

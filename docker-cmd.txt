@@ -2,8 +2,11 @@ Install Docker Tool box for windows
 ------------------------------------
 Start docker with quick start terminal to start default VM
 
-Optional : create VM and use below commands to override default configs
+Optional : create VM and use below commands to override default configs --virtualbox is used since hyper-v is not enabled in windows home edition
 -----------------------------------------------------------------------
+
+docker-machine rm test
+
 docker-machine create -d virtualbox --virtualbox-memory=2048 --virtualbox-cpu-count=2 --virtualbox-disk-size=40960  --virtualbox-no-vtx-check test
 
 docker-machine start test
@@ -18,11 +21,14 @@ docker-machine restart test
 
 docker-machine stop test
 
+
 Replace path for DOCKER_ from env variables to new machine
 
 List docker-machine:
 ---------------------
 docker-machine ls -t 20
+
+docker-machine ip test
 
 Verify docker installation:
 ---------------------------
@@ -107,7 +113,7 @@ build and tagging an image
 -------------------------------
 docker build -f Dockerfile.dev .   - (specify file name)
 
-docker build -t doockerid/projectname:version . (.=> current directory which has Dockerfile)
+docker build -t doockerid/projectname:version -t doockerid/projectname:latest . (.=> current directory which has Dockerfile and build image with different tags)
 
 docker build -t kandan/redis:latest .
 

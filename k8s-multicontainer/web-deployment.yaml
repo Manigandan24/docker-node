@@ -20,7 +20,7 @@ spec:
                   image: skmani2/multi-client:1.0
                   ports:
                     - containerPort: 8080
-                  imagePullPolicy: Always
+                  imagePullPolicy: IfNotPresent
                   env:
                     - name: REDIS_HOST
                       value: redis-srvc
