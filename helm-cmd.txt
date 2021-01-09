@@ -69,7 +69,7 @@ helm package mychart
 
 Install Helm chart:
 ---------------------
-helm install chart
+helm install helm-chart --name=my-app-name
 
 Upgrade/Update Chart:
 ---------------------

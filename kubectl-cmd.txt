@@ -32,6 +32,8 @@ Incase issue with start minikube cluster:
     $ minikube delete  
     $ minikube start  --Note : if docker ip changes update no_proxy to docker ip in env variables
 	minikube start --driver=virtualbox ---
+	---enable virtualbox and run below command------
+	minikube start --vm=true --no-vtx-check
 
 -------------------------------------------------------------------------------------
 Note: Refer skaffold.txt and skaffold.yml for automatic deployment into minikube
