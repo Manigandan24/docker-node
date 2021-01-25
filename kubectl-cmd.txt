@@ -118,9 +118,15 @@ Secret:
 --------
 echo -n 'admin' | base64
 
-echo -n 'YWRtaW4=' | base64 --decode
+echo -n ' ' | base64 --decode
 
 kubectl create secret generic postgres-secret --from-literal PGPASS=encoded value
+
+kubectl -n jenkins get secret docker-secret -o yaml
+
+kubectl get secret -n jenkins docker-secret -o jsonpath="{.data.\.dockerconfigjson}"
+
+echo  -n '' | base64 --decode
 
 Ingress:Load Balancer ---deployment varies by provider(like GC,AWS, Azure)
 ----------------------
@@ -193,10 +199,10 @@ docker system prune - a  -- Remove all the ununsed images from cache
 
 Executing shell/bash Commands in Running container:
 ----------------------------------------------------
-step 1) kubectl exec -it container id -- sh (command prompt for unix) or
+step 1) kubectl exec -it jenkins-0 -- sh (command prompt for unix) or
 		docker run -it image-name sh
 		
-		Example : kubectl -n test-kube exec -it nodeweb-deployment-7849764d85-5jpzg -- sh
+		Example : kubectl -n jenkins exec -it inventory-management-master-1-ccbvj-mpr97-zhlw1 -c kaniko -- sh
 
 step 2) Run shell commands in the container
 
@@ -234,3 +240,21 @@ Secret: securely store a piece of information in cluster in the encoded format. 
 --------
 
 Dashboard: minikube dashboard ----UI for kubernetes resources
+
+
+kubectl -n jenkins logs jenkins-0 -c init
+
+Jenkins Install:
+----------------
+https://www.jenkins.io/doc/book/installing/kubernetes/
+
+helm install jenkins -n jenkins -f jenkins-values.yaml jenkinsci/jenkins
+
+kubectl -n jenkins port-forward jenkins-0 8080:8080
+
+kubectl get secret -n jenkins jenkins -o jsonpath="{.data.jenkins-admin-password}"
+
+
+Reference k8s command: 
+-----------------------
+https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create

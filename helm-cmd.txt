@@ -40,10 +40,21 @@ Confirm Helm installation:
 --------------------------
 helm version --display both tiller and client version
 
+Helm chart set up steps:
+1) helm create
+2) helm update yaml files
+3) helm package
+4) helm repo index
+5) git check in
+5) helm repo add
+6) helm repo search
+7) helm install
 
 Configure Helm chart:
 ----------------------
 helm create mychart
+
+helm create helm-micro/helm-chart
 
 Update Chart.yaml
 
@@ -65,7 +76,22 @@ helm template mychart
 
 Package Helm chart:
 --------------------
-helm package mychart
+helm package ./mychart  -d ./mychart --version 0.1.1
+
+helm package helm-micro/helm-chart
+
+
+Helm index:
+------------
+helm repo index ./helm-chart
+
+helm repo index --merge index.yaml ./helm-chart
+
+helm repo index --url https://Manigandan24.github.io/helm-chart .
+
+helm repo add helm-test-repo https://Manigandan24.github.io/helm-chart
+
+helm search repo helm-test-repo
 
 Install Helm chart:
 ---------------------
